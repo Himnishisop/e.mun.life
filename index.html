@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>E.MUN.Life — Packages</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0a0a0f;
+      --card:#ffffff;
+      --muted:#9aa0a6;
+      --accent1:#7b2cbf; /* purple */
+      --accent2:#12092b; /* black-ish */
+      --gold:#d4af37;
+      --white:#fff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,Arial,Helvetica,sans-serif;
+      background: linear-gradient(180deg,var(--bg) 0%, #07070a 100%);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Header with 3D animated title */
+    header{
+      padding:28px 20px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      justify-content:space-between;
+      background: linear-gradient(90deg,var(--accent1), #0b0b0f 60%);
+      box-shadow:0 6px 20px rgba(0,0,0,0.5);
+    }
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .brand img{ height:56px; width:56px; border-radius:8px; object-fit:cover; border:2px solid rgba(255,255,255,0.06);}
+    .title-3d-wrap{
+      perspective:900px;
+      line-height:1;
+    }
+    .title-3d{
+      font-weight:800;
+      font-size:26px;
+      letter-spacing:1px;
+      transform-origin:center;
+      display:inline-block;
+      animation: tilt 4s ease-in-out infinite;
+      text-transform:uppercase;
+      color:var(--white);
+      text-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    @keyframes tilt{
+      0%{ transform: rotateX(12deg) rotateY(-6deg) translateZ(0) }
+      50%{ transform: rotateX(-6deg) rotateY(6deg) translateZ(12px) }
+      100%{ transform: rotateX(12deg) rotateY(-6deg) translateZ(0) }
+    }
+
+    /* Animated writing / typing effect */
+    .tagline{
+      margin-top:6px;
+      font-size:14px;
+      color:rgba(255,255,255,0.92);
+      max-width:760px;
+      display:block;
+    }
+    .typewriter {
+      display:inline-block;
+      overflow:hidden;
+      border-right:2px solid rgba(255,255,255,0.7);
+      white-space:nowrap;
+      letter-spacing:0.5px;
+      animation: typing 5s steps(40,end) infinite, blink 1s step-end infinite;
+    }
+    @keyframes typing{ 0%{width:0} 50%{width:100%} 100%{width:0} }
+    @keyframes blink{ 50%{border-color:transparent} }
+
+    main{ padding:28px 20px 60px; max-width:1200px; margin:0 auto; }
+
+    /* Reviews section */
+    .reviews {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin:18px 0 26px;
+      overflow:hidden;
+    }
+    .review-card{
+      background:rgba(255,255,255,0.06);
+      padding:14px;
+      border-radius:10px;
+      min-width:220px;
+      flex:0 0 auto;
+      box-shadow:0 8px 20px rgba(0,0,0,0.4);
+    }
+    .review-card h4{ margin:0 0 6px; font-size:15px; color:var(--gold) }
+    .review-card p{ margin:0; color:var(--muted); font-size:13px; line-height:1.35 }
+
+    /* Slogans */
+    .slogans{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px }
+    .slogan{
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:8px 12px;border-radius:999px;font-weight:600;color:var(--white);font-size:13px;
+      border:1px solid rgba(255,255,255,0.03)
+    }
+
+    /* Packages grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap:18px;
+      margin-top:22px;
+    }
+    .card {
+      background: linear-gradient(180deg,#0f0f15, #15151b);
+      border-radius:12px;
+      padding:14px;
+      overflow:visible;
+      border:1px solid rgba(255,255,255,0.03);
+      transition:transform .22s ease, box-shadow .22s ease;
+      text-align:center;
+    }
+    .card:hover{ transform:translateY(-6px); box-shadow:0 18px 40px rgba(0,0,0,0.6) }
+    .card img{
+      width:100%;
+      height:180px;
+      object-fit:contain; /* keep whole image visible */
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:8px;
+      padding:8px;
+    }
+    .card h3{ margin:12px 0 6px; color:var(--accent1) }
+    .card .desc{ color:var(--muted); font-size:13px; min-height:36px }
+    .card .price{ font-weight:800; color:var(--gold); margin:8px 0 10px; font-size:18px }
+    .card .btn{
+      background: linear-gradient(90deg,var(--accent1), #a05bff);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:8px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      box-shadow:0 8px 20px rgba(123,44,191,0.16);
+    }
+
+    /* Contact / footer */
+    .contact{
+      margin-top:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding:16px;border-radius:10px; text-align:center;
+      color:var(--muted)
+    }
+
+    /* Modal common */
+    .modal {
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background: rgba(0,0,0,0.6); z-index:1200; padding:24px;
+    }
+    .modal.show{ display:flex }
+    .modal .panel {
+      background: var(--card);
+      color:#000;
+      width:100%;
+      max-width:760px;
+      border-radius:12px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.5);
+      overflow:hidden;
+    }
+    .panel .head{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:#fff; border-bottom:1px solid #eee }
+    .panel .head h3{ margin:0; font-size:16px }
+    .panel .body{ padding:16px; background:#fff; color:#111; max-height:70vh; overflow:auto }
+    .panel .close{ background:transparent;border:none; font-size:18px; cursor:pointer }
+
+    /* Payment options vertical */
+    .upi-list{ display:flex; flex-direction:column; gap:10px; margin:12px 0 }
+    .upi-item{
+      background:#f8f8fb; border-radius:10px; padding:12px 14px; display:flex; align-items:center; justify-content:space-between;
+      cursor:pointer; border:1px solid #e2e6ef; transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .upi-item:hover{ transform:translateY(-4px); box-shadow:0 8px 30px rgba(18,9,43,0.06) }
+    .pay-cta{
+      display:inline-block; margin-top:10px; font-weight:800; padding:10px 14px; border-radius:8px; background:#111; color:#fff; cursor:pointer;
+    }
+
+    /* QR big */
+    .qr-wrap{ text-align:center; padding:16px }
+    .qr-wrap img{ max-width:320px; width:100%; height:auto; border:8px solid #fff; border-radius:8px; background:#fff }
+    .pay-note{
+      margin-top:12px; font-weight:900; font-size:20px; color:#111;
+      animation: pop 1.2s ease infinite;
+    }
+    @keyframes pop{
+      0%{ transform:translateY(0) scale(1) }
+      50%{ transform:translateY(-6px) scale(1.02) }
+      100%{ transform:translateY(0) scale(1) }
+    }
+    .wa-btn{
+      display:inline-flex; gap:10px; align-items:center; padding:10px 14px; border-radius:8px; background: #25D366; color:#fff; margin-top:12px; text-decoration:none;
+      font-weight:700;
+    }
+
+    /* small responsive */
+    @media (max-width:600px){
+      header{ padding:18px 12px }
+      .title-3d{ font-size:20px }
+      .card img{ height:150px }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="https://i.ibb.co/wh2d3s57/Whats-App-Image-2025-09-14-at-12-38-17-f4ea5d20.jpg" alt="logo">
+      <div class="title-3d-wrap">
+        <div class="title-3d">E.MUN.Life</div>
+        <div class="tagline"> <span class="typewriter">Learn • Earn • Grow — Join 100+ achievers today</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:right;">
+      <div style="font-weight:700">Welcome to E.MUN.Life</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.85)">Sign up to unlock packages</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- reviews + slogans -->
+    <div class="reviews" id="reviews">
+      <!-- auto populated -->
+    </div>
+
+    <div class="slogans" id="slogans">
+      <!-- auto -->
+    </div>
+
+    <!-- packages -->
+    <section>
+      <h2 style="margin:6px 0 12px; color:var(--gold)">Our Packages</h2>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <div class="contact">
+      <strong>Contact</strong>
+      <div style="margin-top:6px">Email: sksal0689@gmail.com • Mobile: +91 7407913295</div>
+      <div style="margin-top:6px">Bank A/C: 137612010004066 • PhonePe (UPI): 8250521301</div>
+    </div>
+  </main>
+
+  <!-- Modals -->
+
+  <!-- Signup localStorage popup (small) -->
+  <div id="signupModal" class="modal" style="align-items:center">
+    <div class="panel" style="max-width:420px">
+      <div class="head">
+        <h3 id="signupTitle">Sign Up / Login</h3>
+        <button class="close" onclick="closeSignup()">✕</button>
+      </div>
+      <div class="body" style="padding:18px">
+        <div style="margin-bottom:8px;color:#222;font-weight:700">Enter name & password (saved locally)</div>
+        <input id="nameInput" placeholder="Your name" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ddd" />
+        <input id="passInput" placeholder="Password" type="password" style="width:100%;margin-top:10px;padding:10px;border-radius:8px;border:1px solid #ddd" />
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn" onclick="doSignup()" style="flex:1;padding:10px;border-radius:8px;background:var(--accent1);color:#fff;border:none;font-weight:800">Submit</button>
+          <button onclick="closeSignup()" style="flex:1;padding:10px;border-radius:8px;border:1px solid #ddd;background:#fff">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form modal (white background) -->
+  <div id="formModal" class="modal">
+    <div class="panel">
+      <div class="head">
+        <h3>Fill Interest Form</h3>
+        <button class="close" onclick="closeForm()">✕</button>
+      </div>
+      <div class="body" id="formBody">
+        <!-- embedded google form -->
+        <div style="background:#fff;padding:8px;border-radius:8px">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScaiFiBBjJbTjqk7U4TwVzdQkPzmP5CD_Xnmog4RlmbTSeY4g/viewform?embedded=true" width="640" height="645" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+        <div style="margin-top:12px;color:#333;font-size:13px">
+          <strong>Or choose a payment option below to purchase selected package:</strong>
+          <div id="selectedInfo" style="margin-top:8px;font-weight:800;color:#111"></div>
+          <div class="upi-list" id="upiList">
+            <!-- upi options populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Modal (white) -->
+  <div id="qrModal" class="modal">
+    <div class="panel" style="max-width:420px;">
+      <div class="head">
+        <h3>Pay via UPI</h3>
+        <button class="close" onclick="closeQR()">✕</button>
+      </div>
+      <div class="body">
+        <div class="qr-wrap">
+          <img id="qrImg" src="https://i.ibb.co/qYFYhHrG/Whats-App-Image-2025-09-14-at-14-35-49-c996f24f.jpg" alt="QR">
+          <div class="pay-note" id="payNote">Pay ₹0 on this QR code</div>
+
+          <div style="margin-top:10px">
+            <button class="pay-cta" id="shareBtn" onclick="openWhatsApp()">⬇️ Share screenshot on WhatsApp</button>
+          </div>
+
+          <div>
+            <a id="waMe" class="wa-btn" href="#" target="_blank">💬 WhatsApp +91 8250521301</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Data ---
+    const packages = [
+      { id:'starter', name:"Starter Package", price:2800, desc:"Learn earning methods via video training. Join our 100+ active team.", img:"https://i.ibb.co/ZRHJZ5RR/Whats-App-Image-2025-09-14-at-12-38-16-d2637990.jpg" },
+      { id:'call', name:"Call Package", price:5300, desc:"One-on-one style guidance + video lessons.", img:"https://i.ibb.co/ZRHJZ5RR/Whats-App-Image-2025-09-14-at-12-38-16-d2637990.jpg" },
+      { id:'brand', name:"Brand Package", price:10500, desc:"Grow your brand & start earning with our team support.", img:"https://i.ibb.co/xSPQBQgc/Whats-App-Image-2025-09-14-at-12-35-15-b271e687.jpg" },
+      { id:'biz', name:"Business Idea Package", price:15099, desc:"New business ideas and practical earning plans.", img:"https://i.ibb.co/Vpj4fFRv/Whats-App-Image-2025-09-14-at-12-35-14-95e6bb5d.jpg" },
+      { id:'edit', name:"Editing Package", price:18050, desc:"Learn editing & monetize content creation.", img:"https://i.ibb.co/Jw8G6S8K/Whats-App-Image-2025-09-14-at-12-35-14-02cc142d.jpg" },
+      { id:'degree', name:"Number One Degree Package", price:25060, desc:"5-year program with a certificate & practical projects.", img:"https://i.ibb.co/9HM13w4B/Whats-App-Image-2025-09-14-at-12-42-03-507f266b.jpg" }
+    ];
+
+    const upiOptions = [
+      {id:'upi1', label:'PhonePe / UPI - 8250521301', upi:'8250521301@upi'},
+      {id:'upi2', label:'Bank UPI - 137612010004066@upi', upi:'137612010004066@upi'},
+      {id:'upi3', label:'Google Pay - 8250521301', upi:'8250521301@okaxis'}
+    ];
+
+    // --- render reviews (test reviews) & slogans ---
+    const reviewsEl = document.getElementById('reviews');
+    const reviews = [
+      {name:"Rahul K.", stars:5, text:"Amazing guidance — earned first payout within 2 weeks! Highly recommend."},
+      {name:"Priya S.", stars:5, text:"Practical videos, friendly team. Supportive community."},
+      {name:"Amit R.", stars:4, text:"Good learning path, realistic outcomes if you follow steps."}
+    ];
+    reviews.forEach(r=>{
+      const div = document.createElement('div');
+      div.className='review-card';
+      div.innerHTML = `<h4>★ ${r.stars} — ${r.name}</h4><p>${r.text}</p>`;
+      reviewsEl.appendChild(div);
+    });
+
+    const slogans = ["Learn. Earn. Repeat.","Join 100+ achievers","Small steps → Big income","Real skills, real payout"];
+    const slogansEl = document.getElementById('slogans');
+    slogans.forEach(s=>{
+      const sp = document.createElement('div'); sp.className='slogan'; sp.textContent = s; slogansEl.appendChild(sp);
+    });
+
+    // --- render packages ---
+    const grid = document.getElementById('grid');
+    packages.forEach(p=>{
+      const el = document.createElement('div'); el.className='card';
+      el.innerHTML = `
+        <img src="${p.img}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <div class="desc">${p.desc}</div>
+        <div class="price">₹${p.price.toLocaleString()}</div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+          <button class="btn" onclick='openForm("${p.id}")'>Select / Buy</button>
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+
+    // --- Signup modal (local storage) ---
+    const signupModal = document.getElementById('signupModal');
+    function showSignup() {
+      if(!localStorage.getItem('signed')) signupModal.classList.add('show');
+    }
+    function closeSignup(){ signupModal.classList.remove('show'); }
+    function doSignup(){
+      const name = document.getElementById('nameInput').value.trim();
+      const pw = document.getElementById('passInput').value.trim();
+      if(!name || !pw){ alert('Please fill both fields'); return; }
+      localStorage.setItem('signed', JSON.stringify({name, pw}));
+      closeSignup();
+      alert('Signed locally. You can now select packages.');
+    }
+
+    // show signup if not signed
+    if(!localStorage.getItem('signed')) setTimeout(showSignup, 600);
+
+    // --- Form modal & Payment flow ---
+    const formModal = document.getElementById('formModal');
+    const upiList = document.getElementById('upiList');
+    const selectedInfo = document.getElementById('selectedInfo');
+    let selectedPackage = null;
+
+    function openForm(pkgId){
+      selectedPackage = packages.find(x=>x.id===pkgId);
+      if(!selectedPackage){ alert('Package not found'); return; }
+      selectedInfo.innerHTML = `Selected: <strong>${selectedPackage.name}</strong> — <span style="color:#111;font-weight:900">₹${selectedPackage.price.toLocaleString()}</span>`;
+      // populate upi options fresh
+      upiList.innerHTML = '';
+      upiOptions.forEach(o=>{
+        const div = document.createElement('div');
+        div.className='upi-item';
+        div.innerHTML = `<div style="font-weight:700">${o.label}</div><div style="color:#666">${o.upi}</div>`;
+        div.onclick = ()=> onSelectUPI(o);
+        upiList.appendChild(div);
+      });
+      formModal.classList.add('show');
+    }
+    function closeForm(){ formModal.classList.remove('show'); }
+
+    // on selecting a UPI
+    function onSelectUPI(upi){
+      // show Pay ₹xx button inside form modal
+      const payBtnId = 'dynamicPayBtn';
+      // remove previous if exists
+      const existing = document.getElementById(payBtnId);
+      if(existing) existing.remove();
+
+      const btn = document.createElement('button');
+      btn.id = payBtnId;
+      btn.className = 'pay-cta';
+      btn.textContent = `Pay ₹${selectedPackage.price.toLocaleString()}`;
+      btn.onclick = ()=> openQR(upi);
+      selectedInfo.appendChild(document.createElement('div'));
+      selectedInfo.appendChild(btn);
+      // smooth scroll selected into view
+      btn.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    // --- QR modal flow ---
+    const qrModal = document.getElementById('qrModal');
+    const payNote = document.getElementById('payNote');
+    const waMe = document.getElementById('waMe');
+
+    function openQR(upi){
+      // close form modal
+      closeForm();
+      // set amount and QR image (already default)
+      payNote.textContent = `Pay ₹${selectedPackage.price.toLocaleString()} on this QR code`;
+      // prepare whatsapp link (user will attach screenshot manually)
+      const msg = encodeURIComponent(`Hi, I've paid ₹${selectedPackage.price} for ${selectedPackage.name}. This is my payment proof (attach screenshot).`);
+      waMe.href = `https://wa.me/918250521301?text=${msg}`;
+      qrModal.classList.add('show');
+    }
+    function closeQR(){ qrModal.classList.remove('show'); }
+
+    // share button opens whatsapp
+    function openWhatsApp(){
+      const msg = encodeURIComponent(`Hi, I paid ₹${selectedPackage.price} for ${selectedPackage.name}. Please find my screenshot attached.`);
+      window.open(`https://wa.me/918250521301?text=${msg}`, '_blank');
+    }
+
+    // close modals on Escape
+    document.addEventListener('keydown', e=>{
+      if(e.key==='Escape'){ closeForm(); closeQR(); closeSignup(); }
+    });
+
+    // final small UX: auto-scroll reviews horizontally for visual movement (simple)
+    let revPos = 0;
+    setInterval(()=> {
+      revPos += 230;
+      if(revPos > reviewsEl.scrollWidth) revPos = 0;
+      reviewsEl.scrollTo({left: revPos, behavior:'smooth'});
+    }, 3000);
+  </script>
+</body>
+</html>
